@@ -1,4 +1,5 @@
-import { CronJob, CronJobParameters } from 'cron';
+import axios from 'axios';
+import { CronJob } from 'cron';
 import Rent from '../controllers/task/Rent';
 import Tokens from '../controllers/task/Token';
 
@@ -43,7 +44,7 @@ class Task {
         try {
           console.log('Task     :: setTimeout called.');
           // HTTP GET request to the dyno's url
-          await fetch(url);
+          await axios.post(url);
           console.log(`Task     :: Fetching ${url}.`);
         } catch (error) {
           const err = error as Error;

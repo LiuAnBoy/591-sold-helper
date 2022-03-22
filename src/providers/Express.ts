@@ -24,7 +24,7 @@ class Express {
 
     Task.token();
     Task.rent();
-    Task.wakeUpDyno('https://rent-591-helper.herokuapp.com/');
+    Task.wakeUpDyno('https://rent-591-helper.herokuapp.com/api/webhook');
   }
 
   private mountDotEnv(): void {
