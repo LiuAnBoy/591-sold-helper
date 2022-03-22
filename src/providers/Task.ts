@@ -6,7 +6,7 @@ class Task {
   public static rent() {
     console.log('Task     :: Rent Task is Running');
     const cron = new CronJob({
-      cronTime: '*/5 * * * *',
+      cronTime: '15 */5 0-15/1 * * *',
       async onTick() {
         await Rent.Fetch();
       },
@@ -47,8 +47,8 @@ class Task {
           console.log(`Task     :: Fetching ${url}.`);
         } catch (error) {
           const err = error as Error;
-          console.log(`Task     :: Error fetching ${url}: ${err.message} 
-                Will try again in 25 minutes...`);
+          console.log(`Task     :: Error fetching ${url}: ${err.message}`);
+          console.log(`Task     :: Will try again in 25 minutes...`);
         }
       },
     });
