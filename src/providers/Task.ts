@@ -1,4 +1,4 @@
-import { CronJob } from 'cron';
+import { CronJob, CronJobParameters } from 'cron';
 import Rent from '../controllers/task/Rent';
 import Tokens from '../controllers/task/Token';
 
@@ -12,7 +12,6 @@ class Task {
       },
       start: true,
     });
-
     if (!cron.running) {
       cron.start();
     }
@@ -29,6 +28,29 @@ class Task {
         );
       },
       start: true,
+    });
+
+    if (!cron.running) {
+      cron.start();
+    }
+  }
+
+  public static wakeUpDyno(url: string) {
+    console.log('Task     :: Wake up Task is Running');
+    const cron = new CronJob({
+      cronTime: '*/25 * * * *',
+      async onTick() {
+        try {
+          console.log('Task     :: setTimeout called.');
+          // HTTP GET request to the dyno's url
+          await fetch(url);
+          console.log(`Task     :: Fetching ${url}.`);
+        } catch (error) {
+          const err = error as Error;
+          console.log(`Task     :: Error fetching ${url}: ${err.message} 
+                Will try again in 25 minutes...`);
+        }
+      },
     });
 
     if (!cron.running) {

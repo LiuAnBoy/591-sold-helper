@@ -5,6 +5,7 @@ import IHouse from '../../interfaces/models/House';
 import House from '../../models/House';
 import Token from '../../models/Token';
 import Notify from '../line/Notify';
+import Tokens from './Token';
 
 class Rent {
   public static async Fetch(): Promise<void> {
@@ -19,7 +20,7 @@ class Rent {
       };
 
       const rentData = await axios.get(
-        ' https://rent.591.com.tw/home/search/rsList?is_format_data=1&is_new_list=1&type=1&section=37,38&searchtype=1&rentprice=15000,25000&showMore=1&area=13,&order=posttime&orderType=desc',
+        'https://rent.591.com.tw/home/search/rsList?is_format_data=1&is_new_list=1&type=1&section=37,38&searchtype=1&rentprice=15000,25000&showMore=1&area=13,&order=posttime&orderType=desc',
         { headers }
       );
 

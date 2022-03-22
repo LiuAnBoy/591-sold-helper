@@ -5,7 +5,6 @@ import Routes from './Routes';
 import Bootstrap from '../middlewares/index';
 import ExceptionHandler from '../exception/Handler';
 import Task from './Task';
-import WakeUpDyno from '../controllers/WakeUpDyno';
 
 class Express {
   /**
@@ -25,6 +24,7 @@ class Express {
 
     Task.token();
     Task.rent();
+    Task.wakeUpDyno('https://rent-591-helper.herokuapp.com/');
   }
 
   private mountDotEnv(): void {
@@ -54,14 +54,6 @@ class Express {
     // Start ther server on the specified port
     this.express
       .listen(port, () => {
-        if (process.env.NODE_ENV === 'production') {
-          console.log(
-            '\x1b[33m%s\x1b[0m',
-            `Server   :: Running @ 'http://localhost:${port}'`
-          );
-          return WakeUpDyno('https://rent-591-helper.herokuapp.com/');
-        }
-
         return console.log(
           '\x1b[33m%s\x1b[0m',
           `Server   :: Running @ 'http://localhost:${port}'`
