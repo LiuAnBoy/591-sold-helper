@@ -2,11 +2,12 @@ import fetch from 'node-fetch';
 
 const WakeUpDyno = (url: string) => {
   const milliseconds = 25 * 60000;
-  setTimeout(() => {
+  setTimeout(async () => {
     try {
       console.log('Task     :: setTimeout called.');
       // HTTP GET request to the dyno's url
-      fetch(url).then(() => console.log(`Task     :: Fetching ${url}.`));
+      await fetch(url);
+      console.log(`Task     :: Fetching ${url}.`);
     } catch (error) {
       const err = error as Error;
       // catch fetch errors

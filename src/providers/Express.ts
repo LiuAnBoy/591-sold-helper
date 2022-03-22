@@ -52,21 +52,24 @@ class Express {
     this.express.use(ExceptionHandler.errorHandler);
 
     // Start ther server on the specified port
-    if (process.env.NODE_ENV === 'production') {
-      WakeUpDyno('https://rent-591-helper.herokuapp.com/');
-    }
-    if (process.env.NODE_ENV === 'development') {
-      this.express
-        .listen(port, () => {
-          return console.log(
+    this.express
+      .listen(port, () => {
+        if (process.env.NODE_ENV === 'production') {
+          console.log(
             '\x1b[33m%s\x1b[0m',
             `Server   :: Running @ 'http://localhost:${port}'`
           );
-        })
-        .on('error', (_error) => {
-          return console.log('Error: ', _error.message);
-        });
-    }
+          return WakeUpDyno('https://rent-591-helper.herokuapp.com/');
+        }
+
+        return console.log(
+          '\x1b[33m%s\x1b[0m',
+          `Server   :: Running @ 'http://localhost:${port}'`
+        );
+      })
+      .on('error', (_error) => {
+        return console.log('Error: ', _error.message);
+      });
   }
 }
 
