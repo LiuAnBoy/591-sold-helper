@@ -4,12 +4,7 @@ import axios from 'axios';
 import Locals from '../../../providers/Locals';
 import Fetch from '../Rent/Fetch';
 
-export const clientConfig: ClientConfig = {
-  channelAccessToken: Locals.config().lineBotToken,
-  channelSecret: Locals.config().lineSecret,
-};
-
-const client = new Client(clientConfig);
+const client = new Client(Locals.config().lineConfig);
 
 class Notify {
   public static async send(req: Request, res: Response) {
@@ -27,27 +22,19 @@ class Notify {
           const { text } = event.message;
 
           if (text === '更新') {
-            await Fetch.getToken(req, res);
+            Fetch.getToken(req, res);
 
-            await client.multicast(
-              [
-                'U741c6dbdfb050332ac47b9fa96cb0223',
-                'Uab5c5d132189af26100fb47170351afb',
-              ],
-              { type: 'text', text: '已更新憑證。' }
-            );
-          }
-          // Reply to the user.
-          await client.multicast(
-            [
-              'U741c6dbdfb050332ac47b9fa96cb0223',
-              'Uab5c5d132189af26100fb47170351afb',
-            ],
-            {
+            await client.replyMessage(replyToken, {
+              type: 'text',
+              text: '已更新憑證。',
+            });
+          } else {
+            await client.replyMessage(replyToken, {
               type: 'text',
               text,
-            }
-          );
+            });
+          }
+          // Reply to the user.
         } catch (error) {
           if (error instanceof Error) {
             console.log(error);

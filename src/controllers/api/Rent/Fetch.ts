@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { Request, Response } from 'express';
+import Token from '../../../models/Token';
 
 class Fetch {
   public static async getToken(req: Request, res: Response) {
@@ -19,17 +20,27 @@ class Fetch {
 
       let cookie;
       if (r.headers['set-cookie']) {
-        cookie = r.headers['set-cookie'].filter((d) => {
+        const result = r.headers['set-cookie'].filter((d) => {
           return d.includes('591_new_session');
         });
+        cookie = `${result}; urlJumpIp=3;`;
       }
 
-      const c = `${cookie}; urlJumpIp=3;`;
+      // Find token data from DB
+      const tokenData = await Token.find();
 
-      return res.send({ cookie: c, csrfToken });
+      await Token.findByIdAndUpdate(
+        tokenData[0].id,
+        { cookie, csrfToken },
+        { new: true }
+      );
+
+      console.log('Token update');
+      // return res.send({ cookie, csrfToken });
     } catch (error) {
-      const errMsg = error as AxiosError;
-      return res.status(500).send({ msg: errMsg.message });
+      const err = error as AxiosError;
+      console.log(err);
+      return res.status(500).send({ msg: err.message });
     }
   }
 }
