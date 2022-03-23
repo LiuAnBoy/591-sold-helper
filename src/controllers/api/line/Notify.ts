@@ -2,6 +2,7 @@ import { WebhookEvent, TextMessage, Client, ClientConfig } from '@line/bot-sdk';
 import { Request, Response } from 'express';
 import axios from 'axios';
 import Locals from '../../../providers/Locals';
+import Fetch from '../Rent/Fetch';
 
 export const clientConfig: ClientConfig = {
   channelAccessToken: Locals.config().lineBotToken,
@@ -25,19 +26,27 @@ class Notify {
           const { replyToken } = event;
           const { text } = event.message;
 
-          // Create a new message.
-          const response: TextMessage = {
-            type: 'text',
-            text,
-          };
+          if (text === '更新') {
+            await Fetch.getToken(req, res);
 
+            await client.multicast(
+              [
+                'U741c6dbdfb050332ac47b9fa96cb0223',
+                'Uab5c5d132189af26100fb47170351afb',
+              ],
+              { type: 'text', text: '已更新憑證。' }
+            );
+          }
           // Reply to the user.
           await client.multicast(
             [
               'U741c6dbdfb050332ac47b9fa96cb0223',
               'Uab5c5d132189af26100fb47170351afb',
             ],
-            response
+            {
+              type: 'text',
+              text,
+            }
           );
         } catch (error) {
           if (error instanceof Error) {

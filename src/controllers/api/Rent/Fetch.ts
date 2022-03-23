@@ -1,12 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import { Request, Response } from 'express';
-import { MongoError } from 'mongodb';
-import House from '../../../models/House';
-
-import Locals from '../../../providers/Locals';
 
 class Fetch {
-  public static async getData(req: Request, res: Response) {
+  public static async getToken(req: Request, res: Response) {
     const patten = '<meta name="csrf-token" content="([A-Za-z0-9]*)">';
     const regExp = new RegExp(patten, 'gi');
     try {
@@ -28,14 +24,9 @@ class Fetch {
         });
       }
 
-      const c = `${cookie}; urlJumpIp=3`;
+      const c = `${cookie}; urlJumpIp=3;`;
 
       return res.send({ cookie: c, csrfToken });
-
-      // return res.send({
-      //   cookie,
-      //   csrfToken,
-      // });
     } catch (error) {
       const errMsg = error as AxiosError;
       return res.status(500).send({ msg: errMsg.message });
