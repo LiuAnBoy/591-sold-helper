@@ -24,9 +24,7 @@ class Task {
       // cronTime: '* * * * *',
       cronTime: '0 0-15/1 * * *',
       async onTick() {
-        await Tokens.GetToken(
-          'https://rent.591.com.tw/?section=37,38&searchtype=1&rentprice=15000,25000&showMore=1&area=13,&order=posttime&orderType=desc'
-        );
+        await Tokens.GetToken();
       },
       start: true,
     });
@@ -44,7 +42,7 @@ class Task {
         try {
           console.log('Task     :: setTimeout called.');
           // HTTP GET request to the dyno's url
-          await axios.post(url);
+          await axios.get(url);
           console.log(`Task     :: Fetching ${url}.`);
         } catch (error) {
           const err = error as Error;

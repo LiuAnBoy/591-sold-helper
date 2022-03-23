@@ -6,8 +6,8 @@ export declare interface LocalsType {
   mongoUrl: string;
   lineBotToken: string;
   lineSecret: string;
-  userId: string;
   taskJobFreq: string;
+  rentUrl: string;
 
   lineConfig: ClientConfig;
 }

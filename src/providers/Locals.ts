@@ -20,9 +20,10 @@ class Locals {
 
     const lineBotToken = process.env.LINE_BOT_ACCESS_TOKEN || '';
     const lineSecret = process.env.LINE_BOT_SECRET || '';
-    const userId = process.env.LINE_BOT_USER_ID || '';
 
     const taskJobFreq = process.env.CRON_JOB_TIME_FREQ || '0 */5 * * * *';
+
+    const rentUrl = process.env.RENT_URL || 'https://rent.591.com.tw/';
 
     const lineConfig: ClientConfig = {
       channelAccessToken: lineBotToken,
@@ -35,8 +36,8 @@ class Locals {
       mongoUrl,
       lineBotToken,
       lineSecret,
-      userId,
       taskJobFreq,
+      rentUrl,
 
       lineConfig,
     };

@@ -1,4 +1,4 @@
-import { WebhookEvent, TextMessage, Client, ClientConfig } from '@line/bot-sdk';
+import { WebhookEvent, Client } from '@line/bot-sdk';
 import { Request, Response } from 'express';
 import axios from 'axios';
 import Locals from '../../../providers/Locals';

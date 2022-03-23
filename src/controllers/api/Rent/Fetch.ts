@@ -1,15 +1,14 @@
 import axios, { AxiosError } from 'axios';
 import { Request, Response } from 'express';
 import Token from '../../../models/Token';
+import Locals from '../../../providers/Locals';
 
 class Fetch {
   public static async getToken(req: Request, res: Response) {
     const patten = '<meta name="csrf-token" content="([A-Za-z0-9]*)">';
     const regExp = new RegExp(patten, 'gi');
     try {
-      const r = await axios.get(
-        'https://rent.591.com.tw/?section=37,38&searchtype=1&rentprice=15000,25000&showMore=1&area=13,&order=posttime&orderType=desc'
-      );
+      const r = await axios.get(Locals.config().rentUrl);
 
       const token = regExp.exec(r.data);
 

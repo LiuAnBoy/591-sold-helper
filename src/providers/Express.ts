@@ -24,7 +24,7 @@ class Express {
 
     Task.token();
     Task.rent();
-    Task.wakeUpDyno('https://rent-591-helper.herokuapp.com/api/webhook');
+    Task.wakeUpDyno('https://rent-591-helper.herokuapp.com/api/');
   }
 
   private mountDotEnv(): void {
@@ -45,7 +45,7 @@ class Express {
   /**
    * Starts the express server
    */
-  public init(): any {
+  public init() {
     const port: number = Locals.config().port;
 
     // Registering Exception / Error Handlers

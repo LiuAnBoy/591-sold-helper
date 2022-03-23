@@ -1,13 +1,14 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import Token from '../../models/Token';
+import Locals from '../../providers/Locals';
 
 class Tokens {
-  public static async GetToken(url: string) {
+  public static async GetToken() {
     const patten = '<meta name="csrf-token" content="([A-Za-z0-9]*)">';
     const regExp = new RegExp(patten, 'gi');
 
     try {
-      const res: AxiosResponse = await axios.get(url);
+      const res: AxiosResponse = await axios.get(Locals.config().rentUrl);
 
       const ct = regExp.exec(res.data);
 
