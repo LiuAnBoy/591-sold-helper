@@ -10,8 +10,6 @@ class Notify {
     channelSecret: Locals.config().lineSecret,
   };
 
-  private userId: string = Locals.config().userId;
-
   constructor() {
     this.client = new Client(this.config);
   }
