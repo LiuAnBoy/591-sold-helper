@@ -57,7 +57,7 @@ class Rent {
           lineNotify.push(d, userId);
         }
 
-        await User.findByIdAndUpdate(
+        await User.findOneAndUpdate(
           { userId },
           { 'condition.houseId': newPostId },
           { new: true }
