@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { CronJob } from 'cron';
 import Rent from '../controllers/task/Rent';
-import Tokens from '../controllers/task/Token';
+import Locals from './Locals';
 
 class Task {
   public static rent() {
     console.log('Task     :: Rent Task is Running');
     const cron = new CronJob({
+      // cronTime: '*/1 * * * *',
       cronTime: '30 */5 0-15/1 * * *',
       async onTick() {
         await Rent.Fetch();
@@ -18,13 +19,13 @@ class Task {
     }
   }
 
-  public static token() {
+  public static token(): void {
     console.log('Task     :: Token Task is Running');
     const cron = new CronJob({
-      // cronTime: '* * * * *',
+      // cronTime: '* * * */1 * *',
       cronTime: '0 0-15/1 * * *',
       async onTick() {
-        await Tokens.GetToken();
+        await axios.get(`${Locals.config().url}/api/refresh_token`);
       },
       start: true,
     });

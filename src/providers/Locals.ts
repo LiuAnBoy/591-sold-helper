@@ -14,20 +14,20 @@ class Locals {
       path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`),
     });
 
-    const url = process.env.APP_URL || `http://localhost:${process.env.PORT}`;
     const port = Number(process.env.PORT) || 8000;
+    const url = process.env.APP_URL || `http://localhost:${port}`;
     const mongoUrl = process.env.MONGO_URI || '';
 
     const lineBotToken = process.env.LINE_BOT_ACCESS_TOKEN || '';
     const lineSecret = process.env.LINE_BOT_SECRET || '';
 
-    const taskJobFreq = process.env.CRON_JOB_TIME_FREQ || '0 */5 * * * *';
-
     const rentUrl = process.env.RENT_URL || 'https://rent.591.com.tw/';
+    const rentApiUrl =
+      'https://rent.591.com.tw/home/search/rsList?is_format_data=1&is_new_list=1&type=1&';
 
     const lineConfig: ClientConfig = {
-      channelAccessToken: lineBotToken,
-      channelSecret: lineSecret,
+      channelAccessToken: process.env.LINE_BOT_ACCESS_TOKEN || '',
+      channelSecret: process.env.LINE_BOT_SECRET || '',
     };
 
     return {
@@ -36,8 +36,8 @@ class Locals {
       mongoUrl,
       lineBotToken,
       lineSecret,
-      taskJobFreq,
       rentUrl,
+      rentApiUrl,
 
       lineConfig,
     };

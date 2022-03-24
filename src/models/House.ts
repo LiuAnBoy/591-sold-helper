@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import IHouse from '../interfaces/models/House';
+import { IHouse } from '../interfaces/models/House';
 
 export interface IHouseModel extends IHouse, mongoose.Document {}
 

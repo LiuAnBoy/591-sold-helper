@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { MongoError } from 'mongodb';
-// import Bluebird from 'bluebird';
 
 import Locals from './Locals';
 
@@ -8,14 +7,6 @@ export class Database {
   // Initialize your database pool
   public static init(): any {
     const dsn = Locals.config().mongoUrl;
-    // const options = {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
-    //   useCreateIndex: true,
-    //   useFindAndModify: false,
-    // };
-
-    // mongoose.Promise = Bluebird;
 
     mongoose.connect(dsn, (error) => {
       if (error instanceof MongoError) {

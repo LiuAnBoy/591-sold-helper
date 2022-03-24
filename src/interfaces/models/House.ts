@@ -1,4 +1,4 @@
-interface IHouse {
+export declare interface IHouse {
   title: string; // 物件名稱
   pId: number; // 物件Post id
   kindName: string; // 物件類型
@@ -9,4 +9,16 @@ interface IHouse {
   area: string; // 物件坪數
 }
 
-export default IHouse;
+export declare interface ConditionTypes {
+  region: string;
+  section: string;
+  kind: string;
+  rentprice: string;
+  multiRoom: string;
+  other: string;
+  shape: string;
+  area: string;
+  multiFloor: string;
+  option: string;
+  multiNotice: string;
+}

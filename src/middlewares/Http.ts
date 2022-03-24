@@ -8,9 +8,6 @@ class Http {
   public static mount(_express: Application): Application {
     console.log("Booting the 'HTTP' middleware");
 
-    // Enable line bot sdk middleware
-    // _express.use(middleware(middlewareConfig));
-
     // Enables the request body parser
     _express.use(bodyParser.json());
     _express.use(bodyParser.urlencoded({ extended: false }));

@@ -1,15 +1,17 @@
 import axios, { AxiosError } from 'axios';
+import fs from 'fs-extra';
 import { Request, Response } from 'express';
-import Token from '../../../models/Token';
 import Locals from '../../../providers/Locals';
+import User from '../../../models/User';
 
 class Fetch {
   public static async getToken(req: Request, res: Response) {
-    const patten = '<meta name="csrf-token" content="([A-Za-z0-9]*)">';
-    const regExp = new RegExp(patten, 'gi');
     try {
       const r = await axios.get(Locals.config().rentUrl);
 
+      // Get csrf token from 591 web
+      const patten = '<meta name="csrf-token" content="([A-Za-z0-9]*)">';
+      const regExp = new RegExp(patten, 'gi');
       const token = regExp.exec(r.data);
 
       let csrfToken;
@@ -17,6 +19,7 @@ class Fetch {
         csrfToken = token[1];
       }
 
+      // Get cookie from 591 web response
       let cookie;
       if (r.headers['set-cookie']) {
         const result = r.headers['set-cookie'].filter((d) => {
@@ -25,21 +28,48 @@ class Fetch {
         cookie = `${result}; urlJumpIp=3;`;
       }
 
-      // Find token data from DB
-      const tokenData = await Token.find();
+      const tokenObj = {
+        csrfToken,
+        cookie,
+      };
 
-      await Token.findByIdAndUpdate(
-        tokenData[0].id,
-        { cookie, csrfToken },
-        { new: true }
-      );
-
-      console.log('Token update');
-      // return res.send({ cookie, csrfToken });
+      fs.writeJSON('./token.json', tokenObj, (err) => {
+        if (err) return console.log(err as Error);
+        console.log('Token has been updated');
+      });
+      return res.send('Token has been updated');
     } catch (error) {
       const err = error as AxiosError;
       console.log(err);
       return res.status(500).send({ msg: err.message });
+    }
+  }
+
+  public static async fetchUser(req: Request, res: Response) {
+    try {
+      const headers = {
+        'X-CSRF-TOKEN': '',
+        Cookie: '',
+      };
+
+      const readData = await fs.readJson('./token.json');
+      headers['X-CSRF-TOKEN'] = readData.csrfToken;
+      headers.Cookie = readData.cookie;
+
+      const userData = await User.aggregate([
+        {
+          $group: {
+            _id: '$id',
+            userId: { $first: '$userId' },
+          },
+        },
+      ]);
+
+      console.log(userData);
+      return res.send(userData);
+    } catch (error) {
+      const err = error as AxiosError;
+      return console.log(err);
     }
   }
 }

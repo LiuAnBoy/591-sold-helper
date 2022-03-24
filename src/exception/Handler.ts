@@ -1,6 +1,3 @@
-import Locals from '../providers/Locals';
-import { Request, Response, NextFunction } from 'express';
-
 class Handler {
   /**
    * Show undermaintenance page incase of errors
