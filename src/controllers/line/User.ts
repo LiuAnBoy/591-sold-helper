@@ -4,6 +4,7 @@ import axios from 'axios';
 import User from '../../models/User';
 import Locals from '../../providers/Locals';
 import { ConditionType } from '../../interfaces/models/User';
+import { Words } from '../../utils/Words';
 
 class LineUser {
   public client: Client;
@@ -23,9 +24,22 @@ class LineUser {
 
         await userData.save();
       }
+
+      const url =
+        'https://notify-bot.line.me/oauth/authorize?' +
+        'response_type=code' +
+        '&client_id=' +
+        `${Locals.config().notifyClientId}` +
+        '&redirect_uri=' +
+        `${Locals.config().url}/api/notify/token` +
+        '&scope=notify' +
+        '&state=' +
+        `${userId}`;
+
       return this.client.pushMessage(userId, {
         type: 'text',
-        text: `請至591網站把篩選過後的網址複製後用新增的指令來存入你的篩選條件。\n\n範例：\n新增 https://rent.591.com.tw/\n\n往後可以藉由設定的條件來推播唷！`,
+        text: url,
+        // text: Words.WELCOME,
       });
     } catch (error) {
       const err = error as Error;
@@ -36,7 +50,8 @@ class LineUser {
   public async addCondition(userId: string, message: string) {
     try {
       const user = await User.findOne({ userId });
-      const conditionStr = message.split('/')[3].slice(1);
+
+      const conditionStr = message.split('?')[1];
       const url = `${Locals.config().rentApiUrl}${conditionStr}`;
       const headers = {
         'X-CSRF-TOKEN': '',
@@ -62,7 +77,7 @@ class LineUser {
         await userData.save();
         return this.client.pushMessage(userId, {
           type: 'text',
-          text: '新增成功',
+          text: Words.ADD_SUCCESS,
         });
       }
 
@@ -70,12 +85,29 @@ class LineUser {
 
       return this.client.pushMessage(userId, {
         type: 'text',
-        text: '新增成功',
+        text: Words.ADD_SUCCESS,
       });
     } catch (error) {
       const err = error as Error;
       return console.log(err);
     }
+  }
+
+  public async stopPush(userId: string) {
+    const user = await User.findOne({ userId });
+
+    if (user) {
+      user.remove();
+      return this.client.pushMessage(userId, {
+        type: 'text',
+        text: Words.STOP_SUCCESS,
+      });
+    }
+
+    return this.client.pushMessage(userId, {
+      type: 'text',
+      text: Words.USER_UNFOUND,
+    });
   }
 }
 

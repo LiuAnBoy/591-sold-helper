@@ -33,6 +33,7 @@ class Express {
 
   private mountRoutes(): void {
     this.express = Routes.mountApi(this.express);
+    this.express = Routes.mountWeb(this.express);
   }
 
   /**

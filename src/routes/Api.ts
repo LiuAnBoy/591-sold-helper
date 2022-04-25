@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import Notify from '../controllers/api/line/Notify';
+import UserNotify from '../controllers/api/line/User';
+import Webhook from '../controllers/api/line/Webhook';
 
 import Fetch from '../controllers/api/Rent/Fetch';
 
@@ -10,6 +11,8 @@ router.get('/', (req, res) => res.send('Hello world'));
 router.get('/refresh_token', Fetch.getToken); // test token
 router.get('/user', Fetch.fetchUser); // test token
 
-router.post('/webhook', Notify.send);
+router.get('/notify/token', UserNotify.getNotifyToken);
+
+router.post('/webhook', Webhook.send);
 
 export default router;

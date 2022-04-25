@@ -25,11 +25,16 @@ class Rent {
       /* eslint no-await-in-loop: "off" */
       for (let i = 0; i < userData.length; i += 1) {
         const userId = userData[i].userId;
+        const notifyToken = userData[i].notifyToken;
         const existPostId = userData[i].condition.houseId;
         console.log(`${userId} start fetching`);
         const rentData = await axios.get(userData[i].condition.url, {
           headers,
         });
+
+        if (rentData.data.data.data.length === 0) {
+          continue;
+        }
 
         const newPostId = rentData.data.data.data[0].post_id;
 
@@ -54,7 +59,7 @@ class Rent {
             section: rentData.data.data.data[j].section_name,
             area: rentData.data.data.data[j].area,
           };
-          lineNotify.push(d, userId);
+          lineNotify.push(d, notifyToken);
         }
 
         await User.findOneAndUpdate(

@@ -15,7 +15,7 @@ class Locals {
     });
 
     const port = Number(process.env.PORT) || 8000;
-    const url = process.env.APP_URL || `http://localhost:${port}`;
+    const url = process.env.SERVER_URL || `http://localhost:${port}`;
     const mongoUrl = process.env.MONGO_URI || '';
 
     const lineBotToken = process.env.LINE_BOT_ACCESS_TOKEN || '';
@@ -30,6 +30,9 @@ class Locals {
       channelSecret: process.env.LINE_BOT_SECRET || '',
     };
 
+    const notifyClientId = process.env.LINE_NOTIFY_CLIENT_ID || '';
+    const notifySecret = process.env.LINE_NOTIFY_SECRET || '';
+
     return {
       url,
       port,
@@ -38,6 +41,9 @@ class Locals {
       lineSecret,
       rentUrl,
       rentApiUrl,
+
+      notifyClientId,
+      notifySecret,
 
       lineConfig,
     };

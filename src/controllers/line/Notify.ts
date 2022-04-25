@@ -1,6 +1,9 @@
 import { Client } from '@line/bot-sdk';
+import axios, { AxiosRequestConfig } from 'axios';
 import { IHouse } from '../../interfaces/models/House';
 import Locals from '../../providers/Locals';
+import { Words } from '../../utils/Words';
+import querystring from 'query-string';
 
 class Notify {
   public client: Client;
@@ -9,7 +12,7 @@ class Notify {
     this.client = new Client(Locals.config().lineConfig);
   }
 
-  public async push(message: IHouse, userId: string) {
+  public async push(message: IHouse, notifyToken: string) {
     const title = `名稱： ${message.title}`;
     const kindName = `類型： ${message.kindName}`;
     const room = `格局： ${message.room}`;
@@ -19,9 +22,57 @@ class Notify {
     const area = `坪數： ${message.area}`;
     const url = `https://rent.591.com.tw/home/${message.pId}`;
 
-    await this.client.pushMessage(userId, {
+    const config: AxiosRequestConfig = {
+      headers: {
+        Authorization: 'Bearer ' + notifyToken,
+      },
+      params: {
+        message: '123',
+        // message: `${title}\n${kindName}\n${room}\n${floor}\n${price}\n${section}\n${area}\n${url}`,
+      },
+      // payload: {
+      //   // message: `${title}\n${kindName}\n${room}\n${floor}\n${price}\n${section}\n${area}\n${url}`,
+      //   message: url,
+      // },
+    };
+
+    const qs = querystring.stringifyUrl({
+      url: 'https://notify-api.line.me/api/notify',
+      query: {
+        message: `\n${title}\n${kindName}\n${room}\n${floor}\n${price}\n${section}\n${area}\n${url}`,
+      },
+    });
+
+    try {
+      const res = await axios.post(
+        qs,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${notifyToken}`,
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(Error);
+      }
+    }
+
+    // await this.client.pushMessage(userId, {
+    //   type: 'text',
+    //   text: `${title}\n${kindName}\n${room}\n${floor}\n${price}\n${section}\n${area}\n${url}`,
+    // });
+  }
+
+  public async refresh(replyToken: string) {
+    await axios.get(`${Locals.config().url}/api/refresh_token`);
+
+    await this.client.replyMessage(replyToken, {
       type: 'text',
-      text: `${title}\n${kindName}\n${room}\n${floor}\n${price}\n${section}\n${area}\n${url}`,
+      text: Words.FRESH_TOKEN,
     });
   }
 }

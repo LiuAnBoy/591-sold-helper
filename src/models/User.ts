@@ -6,6 +6,7 @@ export interface IUserModel extends IUser, mongoose.Document {}
 
 export const UserSchema = new mongoose.Schema<IUserModel>({
   userId: { type: String, required: true },
+  notifyToken: { type: String },
   condition: {
     url: { type: String },
     houseId: { type: Number },

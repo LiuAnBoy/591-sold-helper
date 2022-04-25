@@ -9,5 +9,8 @@ export declare interface LocalsType {
   rentUrl: string;
   rentApiUrl: string;
 
+  notifyClientId: string;
+  notifySecret: string;
+
   lineConfig: ClientConfig;
 }
