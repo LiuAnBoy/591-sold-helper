@@ -38,8 +38,7 @@ class LineUser {
 
       return this.client.pushMessage(userId, {
         type: 'text',
-        text: url,
-        // text: Words.WELCOME,
+        text: `請點擊以下網址綁定Line Notify\n\n${url}`,
       });
     } catch (error) {
       const err = error as Error;
