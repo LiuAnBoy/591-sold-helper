@@ -1,0 +1,10 @@
+version: '3.4'
+services:
+  591-rent-helper:
+    container_name: 591-rent-helper
+    restart: always
+    build: .     
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.production
