@@ -62,7 +62,6 @@ class Rent {
             section: rentData.data.data.data[j].section_name,
             area: rentData.data.data.data[j].area,
           };
-          console.log(notifyToken);
           Notify.push(d, notifyToken);
         }
 
