@@ -32,6 +32,10 @@ class Rent {
           headers,
         });
 
+        if (!userData[i].condition.url) {
+          continue;
+        }
+
         if (rentData.data.data.data.length === 0) {
           continue;
         }

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import querystring from 'query-string';
 import path from 'path';
 import { Request, Response } from 'express';
@@ -28,7 +28,7 @@ class UserNotify {
       query: {
         code,
         grant_type: 'authorization_code',
-        redirect_uri: 'http://localhost:8000/api/notify/token',
+        redirect_uri: `${Locals.config().url}/api/notify/token`,
         // redirect_uri: `${Locals.config().url}/close`,
         client_id: Locals.config().notifyClientId,
         client_secret: Locals.config().notifySecret,
@@ -57,9 +57,14 @@ class UserNotify {
 
       return res.sendFile(path.join(__dirname, '../../../../views/close.html'));
     } catch (error) {
-      if (error instanceof Error) {
-        console.log(error);
-      }
+      console.log(error);
+      // if (error instanceof Error) {
+      //   console.log(error);
+      // }
+
+      // if (error as AxiosError) {
+      //   console.log(error);
+      // }
     }
   }
 }

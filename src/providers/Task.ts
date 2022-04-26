@@ -35,7 +35,7 @@ class Task {
     }
   }
 
-  public static wakeUpDyno(url: string) {
+  public static wakeUpDyno() {
     console.log('Task     :: Wake up Task is Running');
     const cron = new CronJob({
       cronTime: '*/25 * * * *',
@@ -43,11 +43,13 @@ class Task {
         try {
           console.log('Task     :: setTimeout called.');
           // HTTP GET request to the dyno's url
-          await axios.get(url);
-          console.log(`Task     :: Fetching ${url}.`);
+          await axios.get(`${Locals.config().url}`);
+          console.log(`Task     :: Fetching ${Locals.config().url}.`);
         } catch (error) {
           const err = error as Error;
-          console.log(`Task     :: Error fetching ${url}: ${err.message}`);
+          console.log(
+            `Task     :: Error fetching ${Locals.config().url}: ${err.message}`
+          );
           console.log(`Task     :: Will try again in 25 minutes...`);
         }
       },
