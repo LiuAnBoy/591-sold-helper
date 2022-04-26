@@ -9,7 +9,6 @@ import User from '../../models/User';
 class Rent {
   public static async Fetch(): Promise<void> {
     console.log('Task     :: Start fetch Rent data');
-    const lineNotify = new Notify();
     try {
       const headers = {
         'X-CSRF-TOKEN': '',
@@ -44,7 +43,7 @@ class Rent {
 
         /* eslint no-continue: "off" */
         if (existPostId === newPostId) {
-          console.log(`${userId} finish fetching`);
+          console.log(`${userId} finish fetching same post id`);
           continue;
         }
 
@@ -63,7 +62,8 @@ class Rent {
             section: rentData.data.data.data[j].section_name,
             area: rentData.data.data.data[j].area,
           };
-          lineNotify.push(d, notifyToken);
+          console.log(notifyToken);
+          Notify.push(d, notifyToken);
         }
 
         await User.findOneAndUpdate(

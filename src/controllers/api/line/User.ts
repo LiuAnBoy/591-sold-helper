@@ -57,14 +57,13 @@ class UserNotify {
 
       return res.sendFile(path.join(__dirname, '../../../../views/close.html'));
     } catch (error) {
-      console.log(error);
-      // if (error instanceof Error) {
-      //   console.log(error);
-      // }
+      if (error instanceof Error) {
+        console.log(error);
+      }
 
-      // if (error as AxiosError) {
-      //   console.log(error);
-      // }
+      if (error as AxiosError) {
+        console.log(error);
+      }
     }
   }
 }

@@ -1,21 +1,12 @@
 import { Client } from '@line/bot-sdk';
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import querystring from 'query-string';
 import { IHouse } from '../../interfaces/models/House';
 import Locals from '../../providers/Locals';
 import { Words } from '../../utils/Words';
 
 class Notify {
-  public client: Client;
-
-  public axios: Axios;
-
-  constructor() {
-    this.client = new Client(Locals.config().lineConfig);
-    this.axios = new Axios();
-  }
-
-  public async push(message: IHouse, notifyToken: string) {
+  public static async push(message: IHouse, notifyToken: string) {
     const title = `名稱： ${message.title}`;
     const kindName = `類型： ${message.kindName}`;
     const room = `格局： ${message.room}`;
@@ -33,7 +24,7 @@ class Notify {
     });
 
     try {
-      const res = await this.axios.post(
+      const res = await axios.post(
         qs,
         {},
         {
@@ -48,13 +39,15 @@ class Notify {
       if (error instanceof Error) {
         console.log(Error);
       }
+      console.log(error);
     }
   }
 
-  public async refresh(replyToken: string) {
+  public static async refresh(replyToken: string) {
+    const client = new Client(Locals.config().lineConfig);
     await axios.get(`${Locals.config().url}/api/refresh_token`);
 
-    await this.client.replyMessage(replyToken, {
+    await client.replyMessage(replyToken, {
       type: 'text',
       text: Words.FRESH_TOKEN,
     });

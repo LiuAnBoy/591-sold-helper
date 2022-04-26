@@ -52,7 +52,7 @@ class Express {
     // Registering Exception / Error Handlers
     this.express.use(ExceptionHandler.errorHandler);
 
-    // Start ther server on the specified port
+    // Start the server on the specified port
     this.express
       .listen(port, () => {
         return console.log(

@@ -10,7 +10,6 @@ const client = new Client(Locals.config().lineConfig);
 
 class Webhook {
   public static async send(req: Request, res: Response) {
-    const notify = new Notify();
     const user = new LineUser();
     const events: WebhookEvent[] = req.body.events;
 
@@ -30,7 +29,7 @@ class Webhook {
             case text === '開始使用':
               return user.register(userId as string);
             case text === '更新憑證':
-              return await notify.refresh(replyToken);
+              return await Notify.refresh(replyToken);
             case text === '停止通知':
               return user.stopPush(userId as string);
             case /新增 http/.test(text):
