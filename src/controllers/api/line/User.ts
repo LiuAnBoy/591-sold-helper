@@ -55,7 +55,8 @@ class UserNotify {
 
       await user?.updateOne({ notifyToken: response.data.access_token });
 
-      return res.sendFile(path.join(__dirname, '../../../../views/close.html'));
+      // return res.sendFile(path.join(__dirname, '../../../../views/close.html'));
+      return console.log('success');
     } catch (error) {
       if (error instanceof Error) {
         console.log(error);

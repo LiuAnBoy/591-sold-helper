@@ -6,5 +6,5 @@ export declare interface ConditionType {
 export declare interface IUser {
   userId: string;
   notifyToken: string;
-  condition: ConditionType;
+  condition_591: ConditionType;
 }

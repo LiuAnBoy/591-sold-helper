@@ -25,13 +25,13 @@ class Rent {
       for (let i = 0; i < userData.length; i += 1) {
         const userId = userData[i].userId;
         const notifyToken = userData[i].notifyToken;
-        const existPostId = userData[i].condition.houseId;
+        const existPostId = userData[i].condition_591.houseId;
         console.log(`${userId} start fetching`);
-        const rentData = await axios.get(userData[i].condition.url, {
+        const rentData = await axios.get(userData[i].condition_591.url, {
           headers,
         });
 
-        if (!userData[i].condition.url) {
+        if (!userData[i].condition_591.url) {
           continue;
         }
 
@@ -67,7 +67,7 @@ class Rent {
 
         await User.findOneAndUpdate(
           { userId },
-          { 'condition.houseId': newPostId },
+          { 'condition_591.houseId': newPostId },
           { new: true }
         );
         console.log(`${userId} finish fetching`);
