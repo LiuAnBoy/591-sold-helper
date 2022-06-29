@@ -38,7 +38,7 @@ class Fetch {
         if (err) return console.log(err as Error);
         console.log('Token has been updated');
       });
-      return res.send('Token has been updated');
+      return res.send('已更新憑證。');
     } catch (error) {
       const err = error as AxiosError;
       console.log(err);

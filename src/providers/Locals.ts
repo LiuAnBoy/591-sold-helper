@@ -22,8 +22,7 @@ class Locals {
     const lineSecret = process.env.LINE_BOT_SECRET || '';
 
     const rentUrl = process.env.RENT_URL || 'https://rent.591.com.tw/';
-    const rentApiUrl =
-      'https://rent.591.com.tw/home/search/rsList?is_format_data=1&is_new_list=1&type=1&';
+    const rentApiUrl = 'https://sale.591.com.tw/home/search/list?type=2&';
 
     const lineConfig: ClientConfig = {
       channelAccessToken: process.env.LINE_BOT_ACCESS_TOKEN || '',

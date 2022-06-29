@@ -29,7 +29,7 @@ class Webhook {
             case text === '開始使用':
               return user.register(userId as string);
             case text === '更新憑證':
-              return await Notify.refresh(replyToken);
+              return Notify.refresh(replyToken);
             case text === '停止通知':
               return user.stopPush(userId as string);
             case /新增 http/.test(text):

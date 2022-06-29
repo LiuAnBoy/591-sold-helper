@@ -6,12 +6,13 @@ export interface IHouseModel extends IHouse, mongoose.Document {}
 
 export const HouseSchema = new mongoose.Schema<IHouseModel>({
   title: { type: String },
-  pId: { type: Number },
+  houseId: { type: Number },
   kindName: { type: String },
   room: { type: String },
   floor: { type: String },
-  price: { type: String },
-  section: { type: String },
+  unitPrice: { type: String },
+  totalPrice: { type: String },
+  address: { type: String },
   area: { type: String },
 });
 

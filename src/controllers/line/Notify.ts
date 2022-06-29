@@ -1,5 +1,5 @@
 import { Client } from '@line/bot-sdk';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import querystring from 'query-string';
 import { IHouse } from '../../interfaces/models/House';
 import Locals from '../../providers/Locals';
@@ -11,15 +11,16 @@ class Notify {
     const kindName = `類型： ${message.kindName}`;
     const room = `格局： ${message.room}`;
     const floor = `樓層： ${message.floor}`;
-    const price = `租金： ${message.price}`;
-    const section = `地區： ${message.section}`;
+    const unitPrice = `每坪： ${message.unitPrice}`;
+    const totalPrice = `總價： ${message.unitPrice}萬`;
+    const section = `地址： 新北勢板橋區${message.address}`;
     const area = `坪數： ${message.area}`;
-    const url = `https://rent.591.com.tw/home/${message.pId}`;
+    const url = `https://sale.591.com.tw/home/house/detail/2/${message.houseId}.html`;
 
     const qs = querystring.stringifyUrl({
       url: 'https://notify-api.line.me/api/notify',
       query: {
-        message: `\n${title}\n${kindName}\n${room}\n${floor}\n${price}\n${section}\n${area}\n${url}`,
+        message: `\n${title}\n${kindName}\n${room}\n${floor}\n${unitPrice}\n${totalPrice}\n${section}\n${area}\n${url}`,
       },
     });
 
@@ -49,7 +50,7 @@ class Notify {
 
     await client.replyMessage(replyToken, {
       type: 'text',
-      text: Words.FRESH_TOKEN,
+      text: '更新完畢。',
     });
   }
 }

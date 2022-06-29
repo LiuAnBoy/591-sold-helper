@@ -23,13 +23,15 @@ class UserNotify {
       },
     };
 
+    console.log(state);
+    console.log(code);
+
     const url = querystring.stringifyUrl({
       url: 'https://notify-bot.line.me/oauth/token',
       query: {
         code,
         grant_type: 'authorization_code',
         redirect_uri: `${Locals.config().url}/api/notify/token`,
-        // redirect_uri: `${Locals.config().url}/close`,
         client_id: Locals.config().notifyClientId,
         client_secret: Locals.config().notifySecret,
       },
@@ -55,8 +57,7 @@ class UserNotify {
 
       await user?.updateOne({ notifyToken: response.data.access_token });
 
-      // return res.sendFile(path.join(__dirname, '../../../../views/close.html'));
-      return console.log('success');
+      return res.sendFile(path.join(__dirname, '../../../../views/close.html'));
     } catch (error) {
       if (error instanceof Error) {
         console.log(error);

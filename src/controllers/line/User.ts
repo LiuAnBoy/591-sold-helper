@@ -65,13 +65,13 @@ class LineUser {
 
       const condition: ConditionType = {
         url,
-        houseId: rentData.data.data.data[0].post_id,
+        houseId: rentData.data.data.house_list[1].houseid,
       };
 
       if (!user) {
         const userData = new User({
           userId,
-          condition,
+          condition_591: condition,
         });
         await userData.save();
         return this.client.pushMessage(userId, {
@@ -80,7 +80,7 @@ class LineUser {
         });
       }
 
-      await user.updateOne({ condition });
+      await user.updateOne({ condition_591: condition });
 
       return this.client.pushMessage(userId, {
         type: 'text',

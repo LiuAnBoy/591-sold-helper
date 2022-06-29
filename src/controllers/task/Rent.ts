@@ -25,7 +25,7 @@ class Rent {
       for (let i = 0; i < userData.length; i += 1) {
         const userId = userData[i].userId;
         const notifyToken = userData[i].notifyToken;
-        const existPostId = userData[i].condition_591.houseId;
+        const existHouseId = userData[i].condition_591.houseId;
         console.log(`${userId} start fetching`);
         const rentData = await axios.get(userData[i].condition_591.url, {
           headers,
@@ -35,39 +35,40 @@ class Rent {
           continue;
         }
 
-        if (rentData.data.data.data.length === 0) {
+        if (rentData.data.data.house_list.length === 0) {
           continue;
         }
 
-        const newPostId = rentData.data.data.data[0].post_id;
+        const newHouseId = rentData.data.data.house_list[1].houseid;
 
         /* eslint no-continue: "off" */
-        if (existPostId === newPostId) {
-          console.log(`${userId} finish fetching same post id`);
+        if (existHouseId === newHouseId) {
+          console.log(`${userId} finish fetching same House id`);
           continue;
         }
 
-        const idx = rentData.data.data.data.findIndex(
-          (d: any) => d.post_id === existPostId
+        const idx = rentData.data.data.house_list.findIndex(
+          (d: any) => d.houseid === existHouseId
         );
 
         for (let j = 0; j < idx; j += 1) {
           const d: IHouse = {
-            title: rentData.data.data.data[j].title,
-            pId: rentData.data.data.data[j].post_id,
-            kindName: rentData.data.data.data[j].kind_name,
-            room: rentData.data.data.data[j].room_str,
-            floor: rentData.data.data.data[j].floor_str,
-            price: rentData.data.data.data[j].price,
-            section: rentData.data.data.data[j].section_name,
-            area: rentData.data.data.data[j].area,
+            title: rentData.data.data.house_list[j].title,
+            houseId: rentData.data.data.house_list[j].houseid,
+            kindName: rentData.data.data.house_list[j].kind_name,
+            room: rentData.data.data.house_list[j].room,
+            floor: rentData.data.data.house_list[j].floor,
+            unitPrice: rentData.data.data.house_list[j].unit_price,
+            totalPrice: rentData.data.data.house_list[j].showPrice,
+            address: rentData.data.data.house_list[j].address,
+            area: rentData.data.data.house_list[j].area,
           };
           Notify.push(d, notifyToken);
         }
 
         await User.findOneAndUpdate(
           { userId },
-          { 'condition_591.houseId': newPostId },
+          { 'condition_591.houseId': newHouseId },
           { new: true }
         );
         console.log(`${userId} finish fetching`);
