@@ -65,6 +65,8 @@ class Rent {
             totalPrice: rentData.data.data.house_list[j].price,
             address: rentData.data.data.house_list[j].address,
             area: rentData.data.data.house_list[j].area,
+            regionName: rentData.data.data.house_list[j].region_name,
+            sectionName: rentData.data.data.house_list[j].section_name,
           };
           Notify.push(d, notifyToken);
         }

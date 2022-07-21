@@ -8,6 +8,8 @@ export declare interface IHouse {
   totalPrice: string; // 物件總價
   address: string; // 物件地址
   area: string; // 物件坪數
+  regionName: string;
+  sectionName: string;
 }
 
 export declare interface ConditionTypes {
