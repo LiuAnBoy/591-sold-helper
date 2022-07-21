@@ -40,7 +40,7 @@ class Rent {
         }
 
         // Remove first advertisement item
-        rentData.data.data.shift();
+        rentData.data.data.house_list.shift();
 
         const newHouseId = rentData.data.data.house_list[0].houseid;
 
