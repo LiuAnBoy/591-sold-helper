@@ -62,7 +62,7 @@ class Rent {
             room: rentData.data.data.house_list[j].room,
             floor: rentData.data.data.house_list[j].floor,
             unitPrice: rentData.data.data.house_list[j].unit_price,
-            totalPrice: rentData.data.data.house_list[j].showPrice,
+            totalPrice: rentData.data.data.house_list[j].price,
             address: rentData.data.data.house_list[j].address,
             area: rentData.data.data.house_list[j].area,
           };
