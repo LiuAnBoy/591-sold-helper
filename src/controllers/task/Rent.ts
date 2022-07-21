@@ -39,7 +39,10 @@ class Rent {
           continue;
         }
 
-        const newHouseId = rentData.data.data.house_list[1].houseid;
+        // Remove first advertisement item
+        rentData.data.data.shift();
+
+        const newHouseId = rentData.data.data.house_list[0].houseid;
 
         /* eslint no-continue: "off" */
         if (existHouseId === newHouseId) {

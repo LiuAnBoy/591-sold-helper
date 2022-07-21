@@ -12,7 +12,7 @@ class Notify {
     const room = `格局： ${message.room}`;
     const floor = `樓層： ${message.floor}`;
     const unitPrice = `每坪： ${message.unitPrice}`;
-    const totalPrice = `總價： ${message.unitPrice}萬`;
+    const totalPrice = `總價： ${message.totalPrice}萬`;
     const section = `地址： 新北勢板橋區${message.address}`;
     const area = `坪數： ${message.area}`;
     const url = `https://sale.591.com.tw/home/house/detail/2/${message.houseId}.html`;
