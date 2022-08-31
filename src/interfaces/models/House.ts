@@ -10,6 +10,7 @@ export declare interface IHouse {
   area: string; // 物件坪數
   regionName: string;
   sectionName: string;
+  age: string;
 }
 
 export declare interface ConditionTypes {

@@ -15,11 +15,12 @@ class Notify {
     const section = `地址： ${message.regionName}${message.sectionName}${message.address}`;
     const area = `坪數： ${message.area} 坪`;
     const url = `https://sale.591.com.tw/home/house/detail/2/${message.houseId}.html`;
+    const age = `屋齡： ${message.age ? `${message.age} 年` : '不詳'}`;
 
     const qs = querystring.stringifyUrl({
       url: 'https://notify-api.line.me/api/notify',
       query: {
-        message: `\n${title}\n${kindName}\n${room}\n${floor}\n${unitPrice}\n${area}\n${totalPrice}\n${section}\n${url}`,
+        message: `\n${title}\n${kindName}\n${room}\n${age}\n${floor}\n${unitPrice}\n${area}\n${totalPrice}\n${section}\n${url}`,
       },
     });
 
